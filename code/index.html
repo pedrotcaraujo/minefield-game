@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Minefield HTML5</title>
+</head>
+<body>
+	<header>
+		<h1>MineField</h1>
+		<p>Game Minefield built with HTML5, CSS3 and JS.</p>
+	</header>
+	<ul>
+		<li class="game" data-type-game="8">
+			8x8 <span>10 mines</span>
+		</li>
+		<li class="game" data-type-game="16">
+			16x16 <span>40 mines</span>
+		</li>
+	</ul>
+	<section>
+		<div class="field"></div>
+	</section>
+
+	<!-- JS -->
+	<script>
+
+	var typeGame = document.getElementsByClassName('game');
+	for (var i = 0; i < typeGame.length; i++) {
+		typeGame[i].addEventListener('click', function () {
+			var type = this.getAttribute("data-type-game");
+			alert(type);
+		}, false); 
+		
+	}
+	
+	</script>
+
+</body>
+</html>
