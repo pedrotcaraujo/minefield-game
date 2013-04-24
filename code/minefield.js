@@ -1,52 +1,65 @@
-function chooseTypeGame (typeGame) {
 
-	if (typeGame=="8") {
-		mountField(8,8, 10);
-	} else
-	if (typeGame="16") {
-		mountField(16.16, 40);
-	} else
-	if (typeGame=="custom") {
-		var lin = parseInt(document.getElementById('field-line'));
-		var col = parseInt(document.getElementById('field-col'));
-		var mines = parseInt(document.getElementById('field-mines'));
+function Minefield () {
 
-		mountField(lin, col, mines);
-	};
-}
+	const FIELD = $('#field');
 
-function mountField (lin, col, mines) {
+	this.init = function(typeGame) {
 
-	var field = document.getElementById('field');
+		cleanField();
 
-	var lineArray = Array(lin);
-	var colunmArray = Array(col);
+		if (typeGame=="8") {
+			mountField(8,8, 10);
+		} else
+		if (typeGame="16") {
+			mountField(16,16, 40);
+		} else
+		if (typeGame=="custom") {
+			var row = parseInt(document.getElementById('field-row'));
+			var col = parseInt(document.getElementById('field-col'));
+			var mines = parseInt(document.getElementById('field-mines'));
 
-	for (var i = 0; i < lineArray.length; i++) {
-		lineArray[i] = "0";
-		if (i>0) {
-			field.innerHTML("<br>");
+			mountField(row, col, mines);
+		};
+
+	}
+
+	function mountField (row, col, mines) {
+
+		var fieldsArray = new Array(row);
+		
+		 for (var i = 0; i < fieldsArray.length; i++) {
+		 	fieldsArray[i] = new Array(col);
+		 }
+
+		for (var i = 0; i < row; i++) {
+			if (i>0) {
+				FIELD.append('<br>');
+			}
+			for (var j = 0; j < col; j++) {
+				fieldsArray[i][j] = "0";
+				FIELD.append("<span class='mine-field'>"+fieldsArray[i][j]+"</span>");
+			}
+
 		}
 
-		for (var i = 0; i < colunmArray.length; i++) {
-			colunmArray[i] = "0";
-			field.innerHTML("<span class='mine-field'>"+colunmArray[i]+"</span>");
-		};
-		
-	};
+	}
 
+	function addBomb (lineArray, colunmArray) {
 
+		for (var i = 0; i < lineArray.length; i++) {
+			lineArray[i]
+		}
 
-}
+	}
 
-function addBomb (lineArray, colunmArray) {
-	
-	for (var i = 0; i < lineArray.length; i++) {
-		lineArray[i]
-	};
-
-}
-
-function calcSideFields (argument) {
+	function calcSideFields (argument) {
 	// body...
 }
+
+function cleanField () {
+	FIELD.html('');
+}
+
+
+}
+

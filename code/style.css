@@ -1,0 +1,7 @@
+.mine-field {
+	width: 15px;
+	height: 15px;
+	padding: 0 6px;
+	background: #ccc;
+	color: #fff;
+}

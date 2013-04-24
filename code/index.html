@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Minefield HTML5</title>
+	<title>Minefield Game</title>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<header>
 		<h1>MineField</h1>
-		<p>Game Minefield built with HTML5, CSS3 and JS.</p>
+		<p>Game Minefield built with HTML5(Semantic), CSS3 and JS.</p>
 	</header>
 	<ul>
 		<li class="game" data-type-game="8">
@@ -18,21 +21,18 @@
 		</li>
 	</ul>
 	<section>
-		<div class="field"></div>
+		<div id="field"></div>
 	</section>
 
 	<!-- JS -->
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="minefield.js"></script>
 	<script>
-
-	var typeGame = document.getElementsByClassName('game');
-	for (var i = 0; i < typeGame.length; i++) {
-		typeGame[i].addEventListener('click', function () {
-			var type = this.getAttribute("data-type-game");
-			alert(type);
-		}, false); 
-		
-	}
-	
+	$('.game').click(function() {
+		var type = this.getAttribute("data-type-game");
+		var minefield = new Minefield();
+		minefield.init(type);
+	})
 	</script>
 
 </body>
