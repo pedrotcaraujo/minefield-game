@@ -39,8 +39,10 @@ if (typeGame=="8") {
 	fieldsArray = buildArray(row,col);			
 }
 
-mountField();
+
 addBomb();
+calcSideFields();
+mountField();
 
 }
 
@@ -52,8 +54,11 @@ function mountField () {
 			FIELD.append('<br>');
 		}
 		for (var j = 0; j < col; j++) {
-			fieldsArray[i][j] = 0;
-			FIELD.append("<span class='mine-field'>"+fieldsArray[i][j]+"</span>");
+			if (fieldsArray[i][j] == "*") {
+				FIELD.append("<span class='mine-field' style='color:red'>"+fieldsArray[i][j]+"</span>");
+			} else{
+				FIELD.append("<span class='mine-field'>"+fieldsArray[i][j]+"</span>");				
+			}		
 		}
 
 	}
@@ -63,11 +68,12 @@ function mountField () {
 // Function tha will add bombs into minefield randomly
 function addBomb () {
 
-	var amountFields = $('.mine-field');
+	var amountFields = row * col;
 	var bombs = [];
+	var indexBomb = 0;
 
 	while (bombs.length < mines) {
-		var randomnumber = Math.ceil(Math.random()*amountFields.length);
+		var randomnumber = Math.ceil(Math.random()*amountFields);
 		var found = false;
 		for (var i=0; i < bombs.length; i++) {
 			if (bombs[i] == randomnumber) {
@@ -79,10 +85,25 @@ function addBomb () {
 			bombs[bombs.length] = randomnumber;
 		}
 
-		for (var i = 0; i < bombs.length; i++) {
-			$(amountFields[bombs[i]]).html("").append("*").css("color","red");
-		}
+//		for (var i = 0; i < bombs.length; i++) {
+//			$(amountFields[bombs[i]]).html("").append("*").css("color","red");
+//		}
 	}
+
+		for (var i = 0; i < row; i++) {
+			for (var j = 0; j < col; j++) {
+				
+				for (var b = 0; b < bombs.length; b++) {
+					if (bombs[b] == indexBomb) {
+						fieldsArray[i][j] = "*";
+					} else if (fieldsArray[i][j] != "*") {
+						fieldsArray[i][j] = 0;
+					}
+				}
+
+				indexBomb++
+			}
+		}
 
 }
 
@@ -92,31 +113,47 @@ function calcSideFields () {
 		for (var j = 0; j < col; j++) {
 			if (fieldsArray[i][j] == "*") {
 //	Check adjacent fields on down row
-				if (i<row) {
-					fieldsArray[i+1][j];
-					if (j<col) {
-						fieldsArray[i+1][j+1];
+				if (i<row-1) {
+					if (fieldsArray[i+1][j] != "*") {
+					fieldsArray[i+1][j] = fieldsArray[i+1][j]+1
+					}
+					if (j<col-1) {
+						if (fieldsArray[i+1][j+1] != "*") {
+						fieldsArray[i+1][j+1] = fieldsArray[i+1][j+1]+1
+						}
 					}
 					if (j>0) {
-						fieldsArray[i+1][j-1];						
+						if (fieldsArray[i+1][j-1] != "*") {
+						fieldsArray[i+1][j-1] = fieldsArray[i+1][j-1]+1
+						}
 					}
 				}
 //	Check adjacent fields on up row
 				if (i>0) {
-					fieldsArray[i-1][j];
-					if (j<col) {
-						fieldsArray[i-1][j+1];
+					if (fieldsArray[i-1][j] != "*") {
+					fieldsArray[i-1][j] = fieldsArray[i-1][j]+1
+					}
+					if (j<col-1) {
+						if (fieldsArray[i-1][j+1] != "*") {
+						fieldsArray[i-1][j+1] = fieldsArray[i-1][j+1]+1
+						}
 					}
 					if (j>0) {
-						fieldsArray[i-1][j-1];						
+						if (fieldsArray[i-1][j-1] != "*") {
+						fieldsArray[i-1][j-1] = fieldsArray[i-1][j-1]+1
+						}
 					}
 				}
 //	Check adjacent fields same row
-				if (j<col) {
-					fieldsArray[i][j+1];
+				if (j<col-1) {
+					if (fieldsArray[i][j+1] != "*") {
+					fieldsArray[i][j+1] = fieldsArray[i][j+1]+1;
+					}
 				}
 				if (j>0) {
-					fieldsArray[i][j-1];
+					if (fieldsArray[i][j-1] != "*") {
+					fieldsArray[i][j-1] = fieldsArray[i][j-1]+1;
+					}
 				}
 
 			}
