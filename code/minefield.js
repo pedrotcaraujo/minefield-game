@@ -6,6 +6,7 @@ var mines;
 var row;
 var col;
 var fieldsArray;
+var bombs = [];
 
 //	Init method for build the game	
 this.init = function(typeGame) {		
@@ -44,24 +45,28 @@ this.init = function(typeGame) {
 	addBomb();
 	calcSideFields();
 	mountField();
+	startGame();
 
 };
 
 //	Function that will mount the minefield and insert 0 into each field.
 function mountField () {
 
+	var indexCount = 0;
+
 	for (var i = 0; i < row; i++) {
 		if (i>0) {
 			$('#field').append('<br>');
 		}
 		for (var j = 0; j < col; j++) {
-			if (fieldsArray[i][j] === "*") {
-				$('#field').append("<span class='mine-field' style='color:red'>"+fieldsArray[i][j]+"</span>");
-			} else{
-				$('#field').append("<span class='mine-field'>"+fieldsArray[i][j]+"</span>");				
-			}		
-		}
+//			if (fieldsArray[i][j] === "*") {
+//				$('#field').append("<span id='field-"+indexCount+"' class='mine-field' style='color:red'>"+fieldsArray[i][j]+"</span>");
+//			} else{
+				$('#field').append("<span id='field-"+indexCount+"' class='mine-field'></span>");				
+//			}
 
+			indexCount++;		
+		}
 	}
 
 }
@@ -69,8 +74,7 @@ function mountField () {
 // Function tha will add bombs into minefield randomly
 function addBomb () {
 
-	var amountFields = row * col;
-	var bombs = [];
+	var amountFields = row * col;	
 	var indexBomb = 0;
 
 	while (bombs.length < mines) {
@@ -177,6 +181,16 @@ function cleanField () {
 	$('#field').html('');
 }
 
+function startGame () {
+	$('span[id^="field-"]').click(function() {
+		var id = $(this).attr('id');
+		var id = id.charAt()
+		alert(id);
+	});
+}
+
 
 }
+
+//-----------------------ACTION THE GAME------------------
 
