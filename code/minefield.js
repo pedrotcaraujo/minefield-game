@@ -52,7 +52,7 @@ function mountField () {
 			FIELD.append('<br>');
 		}
 		for (var j = 0; j < col; j++) {
-			fieldsArray[i][j] = "0";
+			fieldsArray[i][j] = 0;
 			FIELD.append("<span class='mine-field'>"+fieldsArray[i][j]+"</span>");
 		}
 
@@ -88,7 +88,40 @@ function addBomb () {
 
 // Function that will calculate adjacent fields of the bomb and sum 1 into then.
 function calcSideFields () {
+	for (var i = 0; i < row; i++) {
+		for (var j = 0; j < col; j++) {
+			if (fieldsArray[i][j] == "*") {
+//	Check adjacent fields on down row
+				if (i<row) {
+					fieldsArray[i+1][j];
+					if (j<col) {
+						fieldsArray[i+1][j+1];
+					}
+					if (j>0) {
+						fieldsArray[i+1][j-1];						
+					}
+				}
+//	Check adjacent fields on up row
+				if (i>0) {
+					fieldsArray[i-1][j];
+					if (j<col) {
+						fieldsArray[i-1][j+1];
+					}
+					if (j>0) {
+						fieldsArray[i-1][j-1];						
+					}
+				}
+//	Check adjacent fields same row
+				if (j<col) {
+					fieldsArray[i][j+1];
+				}
+				if (j>0) {
+					fieldsArray[i][j-1];
+				}
 
+			}
+		}
+	}
 }
 
 // Function that will build bidimensional array
