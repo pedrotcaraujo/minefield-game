@@ -183,14 +183,23 @@ function cleanField () {
 
 function startGame () {
 	$('span[id^="field-"]').click(function() {
+		var found = false;
 		var id = $(this).attr('id');
-		var id = id.charAt()
-		alert(id);
+		var id = parseInt(id.substring(6));
+		for (var i = 0; i < bombs.length; i++) {
+			if (bombs[i]===id) {
+				alert("BOMBA");
+				found = true;
+			}
+		}
+
+		if (!found) {
+			alert(id);
+		}
+		
 	});
 }
 
 
 }
-
-//-----------------------ACTION THE GAME------------------
 
