@@ -62,7 +62,7 @@ function mountField () {
 //			if (fieldsArray[i][j] === "*") {
 //				$('#field').append("<span id='field-"+indexCount+"' class='mine-field' style='color:red'>"+fieldsArray[i][j]+"</span>");
 //			} else{
-				$('#field').append("<span id='field-"+indexCount+"' class='mine-field'></span>");				
+				$('#field').append("<div id='field-"+indexCount+"' class='mine-field'></div>");				
 //			}
 
 			indexCount++;		
@@ -182,20 +182,37 @@ function cleanField () {
 }
 
 function startGame () {
-	$('span[id^="field-"]').click(function() {
+	
+	$('div[id^="field-"]').click(function() {
+		var indexCount = 0;
 		var found = false;
 		var id = $(this).attr('id');
 		var id = parseInt(id.substring(6));
-		for (var i = 0; i < bombs.length; i++) {
-			if (bombs[i]===id) {
-				alert("BOMBA");
-				found = true;
-			}
-		}
 
-		if (!found) {
-			alert(id);
-		}
+
+		for (var i = 0; i < row; i++) {
+			for (var j = 0; j < col; j++) {
+
+				if (indexCount===id) {
+
+					for (var b = 0; b < bombs.length; b++) {
+						if (bombs[b]===id) {
+							alert("BOMBA");
+							$(this).html(fieldsArray[i][j]).css("color","red");
+							found = true;
+						}
+					}
+
+					if (!found) {
+						$(this).html(fieldsArray[i][j]);
+					}
+
+
+				}
+
+				indexCount++;
+			}
+		}		
 		
 	});
 }
