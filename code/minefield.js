@@ -43,7 +43,7 @@ this.init = function(typeGame) {
 
 
 	addBomb();
-	calcSideFields();
+	calcAdjacentFields();
 	mountField();
 	startGame();
 
@@ -55,9 +55,6 @@ function mountField () {
 	var indexCount = 0;
 
 	for (var i = 0; i < row; i++) {
-		if (i>0) {
-			$('#field').append('<br>');
-		}
 		for (var j = 0; j < col; j++) {
 //			if (fieldsArray[i][j] === "*") {
 //				$('#field').append("<span id='field-"+indexCount+"' class='mine-field' style='color:red'>"+fieldsArray[i][j]+"</span>");
@@ -113,7 +110,7 @@ function addBomb () {
 }
 
 // Function that will calculate adjacent fields of the bomb and sum 1 into then.
-function calcSideFields () {
+function calcAdjacentFields () {
 	for (var i = 0; i < row; i++) {
 		for (var j = 0; j < col; j++) {
 			if (fieldsArray[i][j] === "*") {
@@ -169,6 +166,7 @@ function calcSideFields () {
 // Function that will build bidimensional array
 function buildArray (row, col) {
 	var fieldsArray = new Array(row);
+	$('#field').css('width', col*38+"px");
 
 	for (var i = 0; i < fieldsArray.length; i++) {
 		fieldsArray[i] = new Array(col);
@@ -205,16 +203,86 @@ function startGame () {
 
 					if (!found) {
 						$(this).html(fieldsArray[i][j]);
-					}
+						if (fieldsArray[i][j] === 0) {
 
+						}
+
+					}
 
 				}
 
 				indexCount++;
 			}
-		}		
+		}
+
+
 		
 	});
+}
+
+function calculateEmptyFields (i, j) {
+
+	//	Check adjacent fields on down row
+							if (i<row-1) {
+								if (fieldsArray[i+1][j] === 0) {
+									var element = findFieldArray(i+1,j);
+									element.appendChild = fieldsArray[i+1][j]);
+									calculateEmptyFields(i+1, j);
+								}
+								if (j<col-1) {
+									if (fieldsArray[i+1][j+1] === 0) {
+									fieldsArray[i+1][j+1] = fieldsArray[i+1][j+1]+1;
+									}
+								}
+								if (j>0) {
+									if (fieldsArray[i+1][j-1] === 0) {
+									fieldsArray[i+1][j-1] = fieldsArray[i+1][j-1]+1;
+									}
+								}
+							}
+			//	Check adjacent fields on up row
+							if (i>0) {
+								if (fieldsArray[i-1][j] === 0) {
+								fieldsArray[i-1][j] = fieldsArray[i-1][j]+1;
+								}
+								if (j<col-1) {
+									if (fieldsArray[i-1][j+1] === 0) {
+									fieldsArray[i-1][j+1] = fieldsArray[i-1][j+1]+1;
+									}
+								}
+								if (j>0) {
+									if (fieldsArray[i-1][j-1] === 0) {
+									fieldsArray[i-1][j-1] = fieldsArray[i-1][j-1]+1;
+									}
+								}
+							}
+			//	Check adjacent fields same row
+							if (j<col-1) {
+								if (fieldsArray[i][j+1] === 0) {
+								fieldsArray[i][j+1] = fieldsArray[i][j+1]+1;
+								}
+							}
+							if (j>0) {
+								if (fieldsArray[i][j-1] === 0) {
+								fieldsArray[i][j-1] = fieldsArray[i][j-1]+1;
+								}
+							}
+}
+
+function findFieldArray(row, col) {
+	var element;
+	var indexCount = 0;
+		for (var i = 0; i < row; i++) {
+			for (var j = 0; j < col; j++) {
+
+				if (i === row && j === col) {
+					element = document.getElementById('field-'+indexCount);
+				}
+
+				indexCount++;
+			}
+		}
+	return element;
 }
 
 
