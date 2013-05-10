@@ -226,7 +226,7 @@ function calculateEmptyFields (i, j) {
 							if (i<row-1) {
 								if (fieldsArray[i+1][j] === 0) {
 									var element = findFieldArray(i+1,j);
-									element.appendChild = fieldsArray[i+1][j]);
+									element.appendChild = fieldsArray[i+1][j];
 									calculateEmptyFields(i+1, j);
 								}
 								if (j<col-1) {
