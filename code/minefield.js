@@ -203,8 +203,17 @@ function startGame () {
 
 					if (!found) {
 						$(this).html(fieldsArray[i][j]);
+						// If the field selected is value 0 -------------------------------------------
 						if (fieldsArray[i][j] === 0) {
-
+							calculateEmptyFields(i,j);
+							calculateEmptyFields(i+1, j);
+							calculateEmptyFields(i+1, j+1);
+							calculateEmptyFields(i+1, j-1);
+							calculateEmptyFields(i-1, j);
+							calculateEmptyFields(i-1, j+1);
+							calculateEmptyFields(i-1, j-1);
+							calculateEmptyFields(i, j+1);
+							calculateEmptyFields(i, j-1);
 						}
 
 					}
@@ -226,57 +235,63 @@ function calculateEmptyFields (i, j) {
 							if (i<row-1) {
 								if (fieldsArray[i+1][j] === 0) {
 									var element = findFieldArray(i+1,j);
-									element.appendChild = fieldsArray[i+1][j];
-									calculateEmptyFields(i+1, j);
+									$(element).html(fieldsArray[i+1][j]);									
 								}
 								if (j<col-1) {
 									if (fieldsArray[i+1][j+1] === 0) {
-									fieldsArray[i+1][j+1] = fieldsArray[i+1][j+1]+1;
+									var element = findFieldArray(i+1,j+1);
+									$(element).html(fieldsArray[i+1][j+1]);									
 									}
 								}
 								if (j>0) {
 									if (fieldsArray[i+1][j-1] === 0) {
-									fieldsArray[i+1][j-1] = fieldsArray[i+1][j-1]+1;
+									var element = findFieldArray(i+1,j-1);
+									$(element).html(fieldsArray[i+1][j-1]);									
 									}
 								}
 							}
 			//	Check adjacent fields on up row
 							if (i>0) {
 								if (fieldsArray[i-1][j] === 0) {
-								fieldsArray[i-1][j] = fieldsArray[i-1][j]+1;
+									var element = findFieldArray(i-1,j);
+									$(element).html(fieldsArray[i-1][j]);	
 								}
 								if (j<col-1) {
 									if (fieldsArray[i-1][j+1] === 0) {
-									fieldsArray[i-1][j+1] = fieldsArray[i-1][j+1]+1;
+									var element = findFieldArray(i-1,j+1);
+									$(element).html(fieldsArray[i-1][j+1]);	
 									}
 								}
 								if (j>0) {
 									if (fieldsArray[i-1][j-1] === 0) {
-									fieldsArray[i-1][j-1] = fieldsArray[i-1][j-1]+1;
+									var element = findFieldArray(i-1,j-1);
+									$(element).html(fieldsArray[i-1][j-1]);	
 									}
 								}
 							}
 			//	Check adjacent fields same row
 							if (j<col-1) {
 								if (fieldsArray[i][j+1] === 0) {
-								fieldsArray[i][j+1] = fieldsArray[i][j+1]+1;
+								var element = findFieldArray(i,j+1);
+								$(element).html(fieldsArray[i][j+1]);	
 								}
 							}
 							if (j>0) {
 								if (fieldsArray[i][j-1] === 0) {
-								fieldsArray[i][j-1] = fieldsArray[i][j-1]+1;
+								var element = findFieldArray(i,j-1);
+								$(element).html(fieldsArray[i][j-1]);
 								}
 							}
 }
 
-function findFieldArray(row, col) {
+function findFieldArray(fieldRow, fieldCol) {
 	var element;
 	var indexCount = 0;
 		for (var i = 0; i < row; i++) {
 			for (var j = 0; j < col; j++) {
 
-				if (i === row && j === col) {
-					element = document.getElementById('field-'+indexCount);
+				if (i === fieldRow && j === fieldCol) {
+					element = '#field-'+indexCount;
 				}
 
 				indexCount++;
